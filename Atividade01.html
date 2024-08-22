@@ -1,104 +1,94 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <script language= “JavaScript” type=“text/JavaScript”></script> 
-    
-    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios JavaScript</title>
 </head>
 <body>
     <script>
-        function verificarParOuImpar() {
-    let numero;
+        // Exercício 1: Verificar se o número é par ou ímpar
+        function verificarParOuImpar(numero) {
+            if (numero % 2 === 0) {
+                return "par";
+            } else {
+                return "ímpar";
+            }
+        }
 
-    while (true) {
-        numero = prompt("Digite um número inteiro positivo:");
+        // Exercício 2: Verificar se o número é primo
+        function verificarNumeroPrimo(numero) {
+            if (numero === 1) return "não é primo";
+            if (numero === 2) return "é primo";
+            if (numero % 2 === 0) return "não é primo";
+
+            for (let i = 3; i <= Math.sqrt(numero); i += 2) {
+                if (numero % i === 0) return "não é primo";
+            }
+            return "é primo";
+        }
+
+        // Exercício 3: Calcular o fatorial do número
+        function calcularFatorial(numero) {
+            let fatorial = 1;
+            for (let i = 1; i <= numero; i++) {
+                fatorial *= i;
+            }
+            return fatorial;
+        }
+
+        // Exercício 4: Verificar o tipo do dado
+        function verificarTipoDado(dado) {
+           
+            if (!isNaN(dado) && dado.trim() !== "") {
+                return "Number";
+            } else {
+                return "String";
+            }
+        }
 
        
-        if (numero !== null && !isNaN(numero) && Number.isInteger(parseFloat(numero)) && parseInt(numero) > 0) {
-            numero = parseInt(numero);
-            break;
-        } else {
-            alert("Por favor, insira um número inteiro positivo válido.");
+        function executarExercicios() {
+          
+            let entrada = prompt("Digite um dado (número ou texto):");
+
+           
+            let tipoDado = verificarTipoDado(entrada);
+
+           
+            if (tipoDado === "Number") {
+               
+                let numero = parseInt(entrada, 10);
+                
+                if (isNaN(numero) || numero <= 0) {
+                    document.body.innerHTML = "Por favor, digite um número inteiro positivo.";
+                    return;
+                }
+
+            
+                let parOuImpar = verificarParOuImpar(numero);
+
+                let primoOuNao = verificarNumeroPrimo(numero);
+
+                let fatorial = calcularFatorial(numero);
+
+               
+                let mensagem = `O número ${numero} é ${parOuImpar} e ${primoOuNao}. O fatorial de ${numero} é ${fatorial}.`;
+
+              
+                alert(mensagem);
+            }
+
+            let confirmar = confirm("Deseja verificar o tipo do dado informado?");
+            if (confirmar) {
+                document.body.innerHTML = `O tipo do dado informado é: ${tipoDado}.`;
+            } else {
+                document.body.innerHTML = "Obrigado por visitar esta página.";
+            }
         }
-    }
-
-    if (numero % 2 === 0) {
-        alert("O número " + numero + " é par.");
-    } else {
-        alert("O número " + numero + " é ímpar.");
-    }
-}
-
-
-verificarParOuImpar();
-function verificarNumeroPrimo() {
-    let numero;
 
     
-    while (true) {
-        numero = prompt("Digite um número inteiro positivo:");
-
-       
-        if (numero !== null && !isNaN(numero) && Number.isInteger(parseFloat(numero)) && parseInt(numero) > 0) {
-            numero = parseInt(numero);
-            break;
-        } else {
-            alert("Por favor, insira um número inteiro positivo válido.");
-        }
-    }
-
-   
-    function ePrimo(n) {
-        if (n <= 1) return false;
-        if (n <= 3) return true;
-        if (n % 2 === 0 || n % 3 === 0) return false;
-        for (let i = 5; i * i <= n; i += 6) {
-            if (n % i === 0 || n % (i + 2) === 0) return false;
-        }
-        return true;
-    }
-
-    
-    if (ePrimo(numero)) {
-        alert("O número " + numero + " é primo.");
-    } else {
-        alert("O número " + numero + " não é primo.");
-    }
-}
-
-
-verificarNumeroPrimo();
-
-// Exercício 3 
-
-function calcularFatorial(n) {
-    if (n === 0 || n === 1) {
-        return 1;
-    } else {
-        return n * calcularFatorial(n - 1);
-    }
-}
-
-
-function solicitarFatorial() {
-    let numero;
-    
-    
-    do {
-        numero = parseInt(prompt("Digite um número inteiro positivo:"), 10);
-    } while (isNaN(numero) || numero < 0);
-    
-   
-    let fatorial = calcularFatorial(numero);
-    alert("O fatorial de " + numero + " é " + fatorial);
-}
-
-
-solicitarFatorial();
-
-
+        executarExercicios();
     </script>
-     
 </body>
 </html>
