@@ -1,1 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Ordenada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #list-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adicionar Valores à Lista</h1>
+    <form id="inputForm">
+        <label for="inputValue">Novo Valor:</label>
+        <input type="text" id="inputValue" required>
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <div id="list-container">
+        <h2>Lista Ordenada:</h2>
+        <ol id="orderedList"></ol>
+    </div>
+
+    <script>
+        // JavaScript para lidar com a lógica
+        const inputForm = document.getElementById('inputForm');
+        const inputValue = document.getElementById('inputValue');
+        const orderedList = document.getElementById('orderedList');
+
+        let valuesArray = [];
+
+        inputForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevenir o comportamento padrão de envio do formulário
+
+            const newValue = inputValue.value.trim();
+            if (newValue) {
+                valuesArray.push(newValue); // Adiciona o valor ao array
+                inputValue.value = ''; // Limpa o campo de entrada
+                updateList(); // Atualiza a lista exibida
+            }
+        });
+
+        function updateList() {
+            // Ordena o array em ordem alfabética
+            valuesArray.sort();
+
+            // Limpa a lista atual
+            orderedList.innerHTML = '';
+
+            // Adiciona cada valor ao HTML
+            valuesArray.forEach(value => {
+                const listItem = document.createElement('li');
+                listItem.textContent = value;
+                orderedList.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
 
