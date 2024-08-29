@@ -7,41 +7,16 @@
 <body>
     
     <script>
-        // Exercício 01: Verificar se o número é par, ímpar e se é primo
-        function verificarParOuImparEPrimo() {
-            let numero;
-
-            while (true) {
-                numero = prompt("Digite um número inteiro positivo:");
-
-                if (numero !== null && !isNaN(numero) && Number.isInteger(parseFloat(numero)) && parseInt(numero) > 0) {
-                    numero = parseInt(numero);
-                    break;
-                } else {
-                    alert("Por favor, insira um número inteiro positivo válido.");
-                }
-            }
-
-            
-            let mensagem = "O número " + numero;
-
-            if (numero % 2 === 0) {
-                mensagem += " é par";
+        // Exercício 03: Calcular o fatorial de um número
+        function calcularFatorial(n) {
+            if (n === 0 || n === 1) {
+                return 1;
             } else {
-                mensagem += " é ímpar";
+                return n * calcularFatorial(n - 1);
             }
-
-            
-            if (ePrimo(numero)) {
-                mensagem += " e primo.";
-            } else {
-                mensagem += " e não é primo.";
-            }
-
-            alert(mensagem);
         }
 
-        
+       
         function ePrimo(n) {
             if (n <= 1) return false;
             if (n <= 3) return true;
@@ -52,10 +27,10 @@
             return true;
         }
 
-        // Exercício 02: Verificar se o número é primo 
-        function verificarNumeroPrimo() {
+        // Exercício 01 e 02: Verificar se o número é par, ímpar e se é primo, além de calcular o fatorial
+        function realizarExercicios() {
             let numero;
-
+            
             while (true) {
                 numero = prompt("Digite um número inteiro positivo:");
 
@@ -67,53 +42,50 @@
                 }
             }
 
+            let mensagem = "O número " + numero;
+
+            if (numero % 2 === 0) {
+                mensagem += " é par";
+            } else {
+                mensagem += " é ímpar";
+            }
+
+          
             if (ePrimo(numero)) {
-                alert("O número " + numero + " é primo.");
+                mensagem += " e primo.";
             } else {
-                alert("O número " + numero + " não é primo.");
+                mensagem += " e não é primo.";
             }
-        }
 
-        // Exercício 03: Calcular o fatorial de um número
-        function calcularFatorial(n) {
-            if (n === 0 || n === 1) {
-                return 1;
-            } else {
-                return n * calcularFatorial(n - 1);
-            }
-        }
-
-        function solicitarFatorial() {
-            let numero;
-            
-            do {
-                numero = parseInt(prompt("Digite um número inteiro positivo:"), 10);
-            } while (isNaN(numero) || numero < 0);
-            
+         
             let fatorial = calcularFatorial(numero);
-            alert("O fatorial de " + numero + " é " + fatorial);
+            mensagem += " O fatorial de " + numero + " é " + fatorial + ".";
+
+            alert(mensagem);
+
+            // Exercício 04: Verificar o tipo de dado
+            verificarTipoDado();
         }
 
-        // Exercício 04: Verificar o tipo de dado
+       
         function verificarTipoDado() {
-            var dado = prompt("Por favor, insira um dado:");
-            var verificar = confirm("Deseja verificar o tipo do dado informado?");
+            let dado = prompt("Por favor, insira um dado:");
+            let tipoDado;
 
-            if (verificar) {
-                document.body.innerHTML = "<p>O tipo do dado informado é: " + typeof dado + "</p>";
+           
+            if (!isNaN(dado)) {
+                tipoDado = "number";
             } else {
-                document.body.innerHTML = "<p>Obrigado por visitar esta página</p>";
+                tipoDado = "string";
             }
+
+            document.body.innerHTML = "<p>O tipo do dado informado é: " + tipoDado + "</p>";
         }
 
         
-        verificarParOuImparEPrimo();
-        verificarNumeroPrimo();
-        solicitarFatorial();
-        verificarTipoDado();
+        realizarExercicios();
 
     </script>
 
 </body>
 </html>
-
