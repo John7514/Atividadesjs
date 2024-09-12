@@ -1,1 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4; 
+        }
+        h1 {
+            font-size: 26px;
+            color: #000;
+            text-align: center;
+        }
+        label {
+            font-size: 10px;
+            color: #222;
+            opacity: 0.9;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            font-size: 12px;
+            color: #999;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding: 5px;
+            width: 300px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input.error {
+            border-bottom: 1px solid red;
+        }
+        .error-message {
+            color: red;
+            font-size: 10px;
+        }
+        button {
+            font-size: 12px;
+            background-color: #eee;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        #extra-fields {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form" onsubmit="handleFormSubmit(event)">
+        <h1>Formulário de Cadastro</h1>
+        <label for="nome">Nome Completo:</label>
+        <input type="text" id="nome" name="nome" required>
+        <div class="error-message" id="nome-error"></div>
 
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <div class="error-message" id="email-error"></div>
+
+        <label for="data">Data de Nascimento:</label>
+        <input type="text" id="data" name="data" placeholder="dd/mm/aaaa" required>
+        <div class="error-message" id="data-error"></div>
+
+        <label for="telefone-fixo">Telefone Fixo:</label>
+        <input type="text" id="telefone-fixo" name="telefone-fixo" placeholder="(xx)xxxx-xxxx" required>
+        <div class="error-message" id="telefone-fixo-error"></div>
+
+        <label for="telefone-celular">Telefone Celular:</label>
+        <input type="text" id="telefone-celular" name="telefone-celular" placeholder="(xx)xxxx-xxxx" required>
+        <div class="error-message" id="telefone-celular-error"></div>
+
+        <label for="tipo">Você é:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="">Selecione</option>
+            <option value="aluno">Aluno</option>
+            <option value="professor">Professor</option>
+        </select>
+        <div class="error-message" id="tipo-error"></div>
+
+        <div id="extra-fields"></div>
+
+        <button type="submit">Entrar</button>
+        <button type="button" onclick="resetForm()">Redefinir</button>
+    </form>
+
+    <script>
+        class Pessoa {
+            constructor(nome, email, dataNascimento, telefoneFixo, telefoneCelular) {
+                this.nome = nome;
+                this.email = email;
+                this.dataNascimento = dataNascimento;
+                this.telefoneFixo = telefoneFixo;
+                this.telefoneCelular = telefoneCelular;
+            }
+        }
+
+        class Aluno extends Pessoa {
+            constructor(nome, email, dataNascimento, telefoneFixo, telefoneCelular, curso, matricula) {
+                super(nome, email, dataNascimento, telefoneFixo, telefoneCelular);
+                this.curso = curso;
+                this.matricula = matricula;
+            }
+        }
+
+        class Professor extends Pessoa {
+            constructor(nome, email, dataNascimento, telefoneFixo, telefoneCelular, areaAtuacao, matricula, lattes) {
+                super(nome, email, dataNascimento, telefoneFixo, telefoneCelular);
+                this.areaAtuacao = areaAtuacao;
+                this.matricula = matricula;
+                this.lattes = lattes;
+            }
+        }
+
+        function validateField(field, regex, errorMessageId, errorMessage) {
+            const value = field.value;
+            const isValid = regex.test(value);
+            document.getElementById(errorMessageId).innerText = isValid ? '' : errorMessage;
+            field.classList.toggle('error', !isValid);
+            return isValid;
+        }
+
+        function validateForm() {
+            let isValid = true;
+
+            const nome = document.getElementById('nome');
+            const email = document.getElementById('email');
+            const data = document.getElementById('data');
+            const telefoneFixo = document.getElementById('telefone-fixo');
+            const telefoneCelular = document.getElementById('telefone-celular');
+            const tipo = document.getElementById('tipo');
+            
+           
+            const nomePattern = /^[a-zA-Z\s]+$/;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const dataPattern = /^\d{2}\/\d{2}\/\d{4}$/;
+            const telefonePattern = /^\(\d{2}\)\d{4}-\d{4}$/;
+            const matriculaAlunoPattern = /^\d{10}$/;
+            const matriculaProfessorPattern = /^\d{5}$/;
+            const cursoPattern = /.+/;
+            const areaAtuacaoPattern = /.+/;
+            const lattesPattern = /.+/;
+
+            isValid &= validateField(nome, nomePattern, 'nome-error', 'Nome deve conter apenas letras e espaços.');
+            isValid &= validateField(email, emailPattern, 'email-error', 'Email inválido.');
+            isValid &= validateField(data, dataPattern, 'data-error', 'Data no formato dd/mm/aaaa.');
+            isValid &= validateField(telefoneFixo, telefonePattern, 'telefone-fixo-error', 'Telefone Fixo no formato (xx)xxxx-xxxx.');
+            isValid &= validateField(telefoneCelular, telefonePattern, 'telefone-celular-error', 'Telefone Celular no formato (xx)xxxx-xxxx.');
+
+            const tipoValue = tipo.value;
+            if (tipoValue === 'aluno') {
+                const curso = document.getElementById('curso');
+                const matricula = document.getElementById('matricula');
+                isValid &= validateField(curso, cursoPattern, 'curso-error', 'Curso é obrigatório.');
+                isValid &= validateField(matricula, matriculaAlunoPattern, 'matricula-error', 'Matrícula do aluno deve ter 10 dígitos.');
+            } else if (tipoValue === 'professor') {
+                const areaAtuacao = document.getElementById('area-atuacao');
+                const matricula = document.getElementById('matricula');
+                const lattes = document.getElementById('lattes');
+                isValid &= validateField(areaAtuacao, areaAtuacaoPattern, 'area-atuacao-error', 'Área de Atuação é obrigatória.');
+                isValid &= validateField(matricula, matriculaProfessorPattern, 'matricula-error', 'Matrícula do professor deve ter 5 dígitos.');
+                isValid &= validateField(lattes, lattesPattern, 'lattes-error', 'Lattes é obrigatório.');
+            }
+
+            return isValid;
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                alert('Formulário enviado com sucesso!');
+                const tipo = document.getElementById('tipo').value;
+                const formData = {
+                    nome: document.getElementById('nome').value,
+                    email: document.getElementById('email').value,
+                    dataNascimento: document.getElementById('data').value,
+                    telefoneFixo: document.getElementById('telefone-fixo').value,
+                    telefoneCelular: document.getElementById('telefone-celular').value
+                };
+                if (tipo === 'aluno') {
+                    formData.curso = document.getElementById('curso').value;
+                    formData.matricula = document.getElementById('matricula').value;
+                    const aluno = new Aluno(formData.nome, formData.email, formData.dataNascimento, formData.telefoneFixo, formData.telefoneCelular, formData.curso, formData.matricula);
+                    console.log(aluno);
+                } else if (tipo === 'professor') {
+                    formData.areaAtuacao = document.getElementById('area-atuacao').value;
+                    formData.matricula = document.getElementById('matricula').value;
+                    formData.lattes = document.getElementById('lattes').value;
+                    const professor = new Professor(formData.nome, formData.email, formData.dataNascimento, formData.telefoneFixo, formData.telefoneCelular, formData.areaAtuacao, formData.matricula, formData.lattes);
+                    console.log(professor);
+                }
+            }
+        }
+
+        function updateExtraFields() {
+            const tipo = document.getElementById('tipo').value;
+            const extraFields = document.getElementById('extra-fields');
+            extraFields.innerHTML = '';
+
+            if (tipo === 'aluno') {
+                extraFields.innerHTML = `
+                    <label for="curso">Curso:</label>
+                    <input type="text" id="curso" name="curso" required>
+                    <div class="error-message" id="curso-error"></div>
+
+                    <label for="matricula">Matrícula:</label>
+                    <input type="text" id="matricula" name="matricula" required>
+                    <div class="error-message" id="matricula-error"></div>
+                `;
+            } else if (tipo === 'professor') {
+                extraFields.innerHTML = `
+                    <label for="area-atuacao">Área de Atuação:</label>
+                    <input type="text" id="area-atuacao" name="area-atuacao" required>
+                    <div class="error-message" id="area-atuacao-error"></div>
+
+                    <label for="matricula">Matrícula:</label>
+                    <input type="text" id="matricula" name="matricula" required>
+                    <div class="error-message" id="matricula-error"></div>
+
+                    <label for="lattes">Lattes:</label>
+                    <input type="text" id="lattes" name="lattes" required>
+                    <div class="error-message" id="lattes-error"></div>
+                `;
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('form').reset();
+            document.getElementById('extra-fields').innerHTML = '';
+            const fields = document.querySelectorAll('input, select');
+            fields.forEach(field => field.classList.remove('error'));
+            const errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(message => message.innerText = '');
+        }
+
+        document.getElementById('tipo').addEventListener('change', updateExtraFields);
+
+        function formatPhone(event) {
+            let input = event.target;
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 10) {
+                value = value.replace(/(\d{2})(\d{4})(\d{4})/, '($1)$2-$3');
+            } else if (value.length > 5) {
+                value = value.replace(/(\d{2})(\d{4})/, '($1)$2-');
+            } else if (value.length > 2) {
+                value = value.replace(/(\d{2})/, '($1)');
+            }
+            input.value = value;
+        }
+
+        document.getElementById('telefone-fixo').addEventListener('input', formatPhone);
+        document.getElementById('telefone-celular').addEventListener('input', formatPhone);
+    </script>
+</body>
+</html>
