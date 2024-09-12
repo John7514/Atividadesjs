@@ -91,6 +91,14 @@
 
         <button type="submit">Entrar</button>
         <button type="button" onclick="resetForm()">Redefinir</button>
+        <button onclick="voltarParaIndex()">Voltar para o Index</button>
+
+<script>
+    function voltarParaIndex() {
+        window.location.href = 'index.html'; 
+    }
+
+</script>
     </form>
 
     <script>
@@ -260,13 +268,5 @@
         document.getElementById('telefone-fixo').addEventListener('input', formatPhone);
         document.getElementById('telefone-celular').addEventListener('input', formatPhone);
     </script>
-     <button onclick="voltarParaIndex()">Voltar para o Index</button>
-
-<script>
-    function voltarParaIndex() {
-        window.location.href = 'index.html'; 
-    }
-
-</script>
 </body>
 </html>
