@@ -37,6 +37,17 @@
         .btn {
             margin: 5px;
             padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-aumentar {
+            background-color: green;
+            color: white;
+        }
+        .btn-diminuir {
+            background-color: red;
+            color: white;
         }
     </style>
 </head>
@@ -47,14 +58,12 @@
         function criarContador() {
             const contadorDiv = document.getElementById('contador');
 
-            
             const titulo = document.createElement('h1');
             titulo.textContent = 'Contador de Pessoas';
             contadorDiv.appendChild(titulo);
 
-           
             const imgHomem = document.createElement('img');
-            imgHomem.src = 'file:///D:/Laborat%C3%B3rio%20de%20Engenharia%20de%20Software/img01'; 
+            imgHomem.src = 'https://png.pngtree.com/png-clipart/20231004/original/pngtree-cartoon-business-man-png-image_13118458.png'; 
             imgHomem.alt = 'Imagem de Homem';
             contadorDiv.appendChild(imgHomem);
 
@@ -65,20 +74,18 @@
             inputHomens.id = 'homens';
             contadorDiv.appendChild(inputHomens);
 
-           
             const btnHomemMais = document.createElement('button');
             btnHomemMais.textContent = '+';
-            btnHomemMais.className = 'btn';
+            btnHomemMais.className = 'btn btn-aumentar';
             contadorDiv.appendChild(btnHomemMais);
 
             const btnHomemMenos = document.createElement('button');
             btnHomemMenos.textContent = '-';
-            btnHomemMenos.className = 'btn';
+            btnHomemMenos.className = 'btn btn-diminuir';
             contadorDiv.appendChild(btnHomemMenos);
 
-            
             const imgMulher = document.createElement('img');
-            imgMulher.src = 'file:///D:/Laborat%C3%B3rio%20de%20Engenharia%20de%20Software/img02'; // Exemplo de imagem de mulher
+            imgMulher.src = 'https://static.vecteezy.com/ti/vetor-gratis/p1/8294873-bonito-empresaria-desenhos-ilustracao-vetor.jpg';
             imgMulher.alt = 'Imagem de Mulher';
             contadorDiv.appendChild(imgMulher);
 
@@ -89,34 +96,29 @@
             inputMulheres.id = 'mulheres';
             contadorDiv.appendChild(inputMulheres);
 
-           
             const btnMulherMais = document.createElement('button');
             btnMulherMais.textContent = '+';
-            btnMulherMais.className = 'btn';
+            btnMulherMais.className = 'btn btn-aumentar';
             contadorDiv.appendChild(btnMulherMais);
 
             const btnMulherMenos = document.createElement('button');
             btnMulherMenos.textContent = '-';
-            btnMulherMenos.className = 'btn';
+            btnMulherMenos.className = 'btn btn-diminuir';
             contadorDiv.appendChild(btnMulherMenos);
 
-            
             const botaoContar = document.createElement('button');
             botaoContar.textContent = 'Contar Total';
             contadorDiv.appendChild(botaoContar);
 
-           
             const iconReset = document.createElement('span');
             iconReset.classList.add('icon');
             iconReset.innerHTML = '🔄'; 
             contadorDiv.appendChild(iconReset);
 
-           
             const resultado = document.createElement('p');
             resultado.id = 'resultado';
             contadorDiv.appendChild(resultado);
 
-            
             btnHomemMais.onclick = function() {
                 inputHomens.value = parseInt(inputHomens.value) + 1;
             };
@@ -125,7 +127,6 @@
                 inputHomens.value = Math.max(0, parseInt(inputHomens.value) - 1);
             };
 
-            
             btnMulherMais.onclick = function() {
                 inputMulheres.value = parseInt(inputMulheres.value) + 1;
             };
@@ -134,7 +135,6 @@
                 inputMulheres.value = Math.max(0, parseInt(inputMulheres.value) - 1);
             };
 
-           
             botaoContar.onclick = function() {
                 const homens = parseInt(inputHomens.value) || 0;
                 const mulheres = parseInt(inputMulheres.value) || 0;
@@ -142,24 +142,22 @@
                 resultado.textContent = `Total de pessoas: ${total}`;
             };
 
-            
             iconReset.onclick = function() {
                 inputHomens.value = 0;
                 inputMulheres.value = 0;
                 resultado.textContent = 'Total de pessoas: 0';
-
-                
             };
+
+            const botaoVoltar = document.createElement('button');
+            botaoVoltar.textContent = 'Voltar para o Index';
+            botaoVoltar.className = 'btn';
+            botaoVoltar.onclick = function() {
+                window.location.href = 'index.html'; 
+            };
+            contadorDiv.appendChild(botaoVoltar);
         }
 
-        
         criarContador();
-
-        
     </script>
-
-    
 </body>
-
-
 </html>
