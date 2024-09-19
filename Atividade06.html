@@ -1,1 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Pessoas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #contador {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input {
+            width: 50px;
+            margin: 10px;
+            text-align: center;
+        }
+        img {
+            width: 100px;
+            height: auto;
+            margin: 0 10px;
+        }
+        .icon {
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn {
+            margin: 5px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="contador"></div>
 
+    <script>
+        function criarContador() {
+            const contadorDiv = document.getElementById('contador');
+
+            
+            const titulo = document.createElement('h1');
+            titulo.textContent = 'Contador de Pessoas';
+            contadorDiv.appendChild(titulo);
+
+           
+            const imgHomem = document.createElement('img');
+            imgHomem.src = 'file:///D:/Laborat%C3%B3rio%20de%20Engenharia%20de%20Software/img01'; 
+            imgHomem.alt = 'Imagem de Homem';
+            contadorDiv.appendChild(imgHomem);
+
+            const inputHomens = document.createElement('input');
+            inputHomens.type = 'number';
+            inputHomens.value = 0;
+            inputHomens.min = 0;
+            inputHomens.id = 'homens';
+            contadorDiv.appendChild(inputHomens);
+
+           
+            const btnHomemMais = document.createElement('button');
+            btnHomemMais.textContent = '+';
+            btnHomemMais.className = 'btn';
+            contadorDiv.appendChild(btnHomemMais);
+
+            const btnHomemMenos = document.createElement('button');
+            btnHomemMenos.textContent = '-';
+            btnHomemMenos.className = 'btn';
+            contadorDiv.appendChild(btnHomemMenos);
+
+            
+            const imgMulher = document.createElement('img');
+            imgMulher.src = 'file:///D:/Laborat%C3%B3rio%20de%20Engenharia%20de%20Software/img02'; // Exemplo de imagem de mulher
+            imgMulher.alt = 'Imagem de Mulher';
+            contadorDiv.appendChild(imgMulher);
+
+            const inputMulheres = document.createElement('input');
+            inputMulheres.type = 'number';
+            inputMulheres.value = 0;
+            inputMulheres.min = 0;
+            inputMulheres.id = 'mulheres';
+            contadorDiv.appendChild(inputMulheres);
+
+           
+            const btnMulherMais = document.createElement('button');
+            btnMulherMais.textContent = '+';
+            btnMulherMais.className = 'btn';
+            contadorDiv.appendChild(btnMulherMais);
+
+            const btnMulherMenos = document.createElement('button');
+            btnMulherMenos.textContent = '-';
+            btnMulherMenos.className = 'btn';
+            contadorDiv.appendChild(btnMulherMenos);
+
+            
+            const botaoContar = document.createElement('button');
+            botaoContar.textContent = 'Contar Total';
+            contadorDiv.appendChild(botaoContar);
+
+           
+            const iconReset = document.createElement('span');
+            iconReset.classList.add('icon');
+            iconReset.innerHTML = '🔄'; 
+            contadorDiv.appendChild(iconReset);
+
+           
+            const resultado = document.createElement('p');
+            resultado.id = 'resultado';
+            contadorDiv.appendChild(resultado);
+
+            
+            btnHomemMais.onclick = function() {
+                inputHomens.value = parseInt(inputHomens.value) + 1;
+            };
+
+            btnHomemMenos.onclick = function() {
+                inputHomens.value = Math.max(0, parseInt(inputHomens.value) - 1);
+            };
+
+            
+            btnMulherMais.onclick = function() {
+                inputMulheres.value = parseInt(inputMulheres.value) + 1;
+            };
+
+            btnMulherMenos.onclick = function() {
+                inputMulheres.value = Math.max(0, parseInt(inputMulheres.value) - 1);
+            };
+
+           
+            botaoContar.onclick = function() {
+                const homens = parseInt(inputHomens.value) || 0;
+                const mulheres = parseInt(inputMulheres.value) || 0;
+                const total = homens + mulheres;
+                resultado.textContent = `Total de pessoas: ${total}`;
+            };
+
+            
+            iconReset.onclick = function() {
+                inputHomens.value = 0;
+                inputMulheres.value = 0;
+                resultado.textContent = 'Total de pessoas: 0';
+
+                
+            };
+        }
+
+        
+        criarContador();
+
+        
+    </script>
+
+    
+</body>
+
+
+</html>
