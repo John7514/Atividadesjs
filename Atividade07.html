@@ -1,1 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letreiro Fatec</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .letreiro {
+            font-size: 2rem;
+            color: #2c3e50;
+            border: 1px solid #2c3e50;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Letreiro extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    displayedText: "",
+                };
+            }
 
+            componentDidMount() {
+                const fullText = "Venha estudar na Fatec";
+                let index = 0;
+
+                const typingInterval = setInterval(() => {
+                    if (index < fullText.length) {
+                        this.setState((prevState) => ({
+                            displayedText: prevState.displayedText + fullText.charAt(index),
+                        }));
+                        index++;
+                    } else {
+                        clearInterval(typingInterval);
+                    }
+                }, 150); // Tempo entre as letras
+            }
+
+            render() {
+                return (
+                    <div className="letreiro">
+                        {this.state.displayedText}
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(<Letreiro />, document.getElementById('root'));
+    </script>
+</body>
+</html>
